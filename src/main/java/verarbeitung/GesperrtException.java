@@ -7,7 +7,7 @@ package verarbeitung;
  */
 @SuppressWarnings("serial")
 public class GesperrtException extends Exception {
-	
+
 	/**
 	 * Zugriff auf das verarbeitung.Konto mit der angegebenen Kontonummer
 	 * @param kontonummer die Nummer des gesperrten Kontos, auf das zugegriffen wurde
@@ -16,6 +16,4 @@ public class GesperrtException extends Exception {
 	{
 		super("Zugriff auf gesperrtes verarbeitung.Konto mit Kontonummer " + kontonummer);
 	}
-	
-
 }

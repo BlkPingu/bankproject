@@ -35,7 +35,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>IhrePackage.IhreKlasse</mainClass>
+                            <mainClass>Kontentest</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
