@@ -1,4 +1,6 @@
 import java.time.LocalDate;
+import java.util.TreeSet;
+
 import verarbeitung.*;
 
 
@@ -14,10 +16,23 @@ public class Kontentest {
 	 * @param args wird nicht benutzt
 	 */
 	public static void main(String[] args) {
-		Kunde ich = new Kunde("Dorothea", "Hubrich", "zuhause", LocalDate.parse("1976-07-13"));
-		
+		Kunde doro = new Kunde("Dorothea", "Hubrich", "Leipzig", LocalDate.of(1976, 7, 13));
+		Kunde angela = new Kunde("Angela","Merkel", "Berlin",LocalDate.of(1900,6,9) );
+		Kunde brack = new Kunde("Barack", "Obama", "Washington", LocalDate.of(1950,5,12));
+		Kunde frank = new Kunde("Walther", "Steinmeier", "Berin",LocalDate.of(1940,3,20));
+		Kunde es = new Kunde("Cem", "Oezdemir", "Berlin", LocalDate.of(1920,11,11));
 		// verarbeitung.Konto k = new verarbeitung.Konto();
-		
+
+		Set<Kunde>menge = TreeSet<>();
+		Iterator<Kunde> it = menge.iterator();
+		while(it.hasNext()){
+			Kunde k = it.next();
+			if ("k")
+		}
+
+
+
+
 		
 		Girokonto meinGiro = new Girokonto(ich, 1234, 1000.0);
 		meinGiro.einzahlen(50, Waehrung.EUR);

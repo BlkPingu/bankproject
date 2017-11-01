@@ -77,15 +77,12 @@ public class Student extends Kunde {
      */
     public void studienbescheinigungAktuell(int letzteStudienbescheinigungSemester, int studienbescheinigung ){
         if (letzteStudienbescheinigungSemester == studienbescheinigung){
-            System.out.println("Aktuelle Studienbescheinigung bereits vorhanden");
             setAktuelleStudienBescheinigung(true);
         }
         else if (letzteStudienbescheinigungSemester <= studienbescheinigung){
-            System.out.println("Neue Studienbescheinigung updated");
             setAktuelleStudienBescheinigung(true);
         }
         else if(letzteStudienbescheinigungSemester >= studienbescheinigung){
-            System.out.println("Veraltete Studienbescheinigung");
             setAktuelleStudienBescheinigung(false);
         }
     }
