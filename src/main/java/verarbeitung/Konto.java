@@ -33,6 +33,8 @@ public abstract class Konto
 	{
 		this.kontostand = kontostand;
 	}
+
+
 	/**
 	 * setzt den neue verarbeitung.Waehrung
 	 * @param Waehrung neue verarbeitung.Waehrung

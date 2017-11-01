@@ -1,13 +1,16 @@
 package verarbeitung;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Tobias on 29/10/17.
  */
 public class Bank {
     public long bankleitzahl;
-    public double kontostand;
+    HashMap<Long, Kunde > konten = new HashMap<>();
 
     /**
      * erstellt Bank und ihre Bankleitzahl als identifizierenden Schlüssel (ID)
@@ -31,7 +34,8 @@ public class Bank {
      * @return Kontostand von Konto mit angegebener Nummer
      */
     public double getKontostand(long nummer) {
-        return kontostand;
+
+        return ;
     }
     /**
      * gibt alle Kontoen zurueck
@@ -41,6 +45,10 @@ public class Bank {
 
     }
 
+    public static long neueKontonummer() {
+        long kontonummer=1000000000;
+        return kontonummer;
+    }
     /**
      * Erstellt:
      * -Girokonto fuer angebebenen Kunden (mit neuer einzigartiger ID)
@@ -49,6 +57,7 @@ public class Bank {
      * @return vergebene Kontonummer
      */
     public long girokontoErstellen (Kunde inhaber){
+        konten.put(Bank.neueKontonummer(), inhaber);
 
     }
     /**
@@ -67,7 +76,8 @@ public class Bank {
      * @return
      */
     public List<Long> getAlleKontonummern(){
-
+        List<Long> kontonummern = new ArrayList<Long>(konten.keySet());
+        return kontonummern;
     }
 
     /**
