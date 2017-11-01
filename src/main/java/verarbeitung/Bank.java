@@ -1,16 +1,14 @@
 package verarbeitung;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by Tobias on 29/10/17.
  */
 public class Bank {
     public long bankleitzahl;
-    HashMap<Long, Kunde > konten = new HashMap<>();
+    long aktuelleKontonummer=10000000;
+    HashMap<Long, Konto > konten = new HashMap<>();
 
     /**
      * erstellt Bank und ihre Bankleitzahl als identifizierenden Schlüssel (ID)
@@ -25,7 +23,7 @@ public class Bank {
      * @return die Bankleitzahl
      */
     public long getBankleitzahl() {
-        return bankleitzahl;
+        return this.bankleitzahl;
     }
 
     /**
@@ -34,20 +32,27 @@ public class Bank {
      * @return Kontostand von Konto mit angegebener Nummer
      */
     public double getKontostand(long nummer) {
-
-        return ;
+        return konten.get(nummer).getKontostand();
     }
     /**
      * gibt alle Kontoen zurueck
      * @return Liste mit allen Konten
      */
     public String getAlleKonten(){
-
+        return konten.keySet().toString();
     }
 
-    public static long neueKontonummer() {
-        long kontonummer=1000000000;
-        return kontonummer;
+    public long neueKontonummer() {
+        List<Long> kontonummern = new ArrayList<Long>(konten.keySet());
+        aktuelleKontonummer++;
+        while (kontonummern.contains(aktuelleKontonummer)){
+            aktuelleKontonummer++;
+
+                if(aktuelleKontonummer>=99999999){
+                    aktuelleKontonummer=10000000;
+                }
+        }
+        return aktuelleKontonummer;
     }
     /**
      * Erstellt:
@@ -57,8 +62,10 @@ public class Bank {
      * @return vergebene Kontonummer
      */
     public long girokontoErstellen (Kunde inhaber){
-        konten.put(Bank.neueKontonummer(), inhaber);
-
+        long neueGiroKontoNr= neueKontonummer();
+        konten.put(neueGiroKontoNr,new Girokonto(inhaber,neueGiroKontoNr, 500));
+        //finde Ich ja nicht noetig die Kontonummer zweimal zu speichern, aber Ich programmiere hier nur
+        return neueGiroKontoNr;
     }
     /**
      * Erstellt:
@@ -68,7 +75,10 @@ public class Bank {
      * @return vergebene Kontonummer
      */
     public long sparbuchErstellen(Kunde inhaber){
-
+        long neueGiroKontoNr= neueKontonummer();
+        konten.put(neueGiroKontoNr,new Sparbuch(inhaber,neueGiroKontoNr));
+        //finde Ich ja nicht noetig die Kontonummer zweimal zu speichern, aber Ich programmiere hier nur
+        return neueGiroKontoNr;
     }
 
     /**
@@ -86,8 +96,10 @@ public class Bank {
      * @param betrag
      * @return true/false stellvertretend für Erfolg/Misserfolg
      */
-    public boolean geldAbheben(long von, double betrag){
-
+    public boolean geldAbheben(long von, double betrag) throws GesperrtException {
+        if(konten.containsKey(von) == true) {
+            return konten.get(von).abheben(betrag,Waehrung.EUR);
+        } else return false;
     }
 
     /**
@@ -96,7 +108,9 @@ public class Bank {
      * @param betrag
      */
     public void getEinzahlen(long auf, double betrag){
-
+        if(konten.containsKey(auf) == true) {
+            konten.get(auf).einzahlen(betrag,Waehrung.EUR);
+        }
     }
 
     /**
@@ -105,7 +119,10 @@ public class Bank {
      * @return true/false fuer Erfolg/Misserfolg
      */
     public boolean kontoLoeschen(long nummer){
-
+        if(konten.containsKey(nummer) == true){
+            konten.remove(nummer);
+            return true;
+        }else return false;
     }
     /**
      * Ueberweist einen Betrag betrag von Konto mit Kontonummer vonKontonr nach Konto mit Kontonummer nachKontonr
@@ -117,7 +134,14 @@ public class Bank {
      * @return true/false fuer Erfolg oder Misserfolg
      */
     public boolean geldUeberweisen(long vonKontonr, long nachKontonr,double betrag, String verwendungszweck){
+        if (konten.containsKey(vonKontonr)== true & konten.containsKey(nachKontonr) == true){
+            double vonkontostand = konten.get(vonKontonr).getKontostand();
+            konten.get(vonKontonr).setKontostand(vonkontostand -= betrag);
 
+            double nachKontostand = konten.get(nachKontonr).getKontostand();
+            konten.get(vonKontonr).setKontostand(nachKontostand += betrag);
+            return true;
+        }else return false;
     }
 
 
