@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="75bfca07-0126-4d8d-9bd1-089359c0ba72" name="Default" comment="">
+    <list default="true" id="75bfca07-0126-4d8d-9bd1-089359c0ba72" name="Default" comment="added Kontoauszug and List to store Kontoactions">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Kontentest.java" afterPath="$PROJECT_DIR$/src/main/java/Kontentest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/verarbeitung/Konto.java" afterPath="$PROJECT_DIR$/src/main/java/verarbeitung/Konto.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/verarbeitung/Kontoaktion.java" afterPath="$PROJECT_DIR$/src/main/java/verarbeitung/Kontoaktion.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -32,8 +29,8 @@
       <file leaf-file-name="Konto.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/verarbeitung/Konto.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="98">
-              <caret line="120" column="53" lean-forward="true" selection-start-line="120" selection-start-column="53" selection-end-line="120" selection-end-column="53" />
+            <state relative-caret-position="188">
+              <caret line="126" column="9" lean-forward="true" selection-start-line="126" selection-start-column="9" selection-end-line="126" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#3348#3349#0" expanded="true" />
@@ -935,7 +932,7 @@
       <workItem from="1508868791155" duration="26923000" />
       <workItem from="1509034935820" duration="602000" />
       <workItem from="1509086093459" duration="17324000" />
-      <workItem from="1509550258325" duration="20639000" />
+      <workItem from="1509550258325" duration="20969000" />
     </task>
     <task id="LOCAL-00001" summary="added Kontoart and Kontoaktion classes">
       <created>1509533045959</created>
@@ -958,11 +955,18 @@
       <option name="project" value="LOCAL" />
       <updated>1509649006837</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="added Kontoauszug and List to store Kontoactions">
+      <created>1509652907591</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1509652907591</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="65488000" />
+    <option name="totallyTimeSpent" value="65818000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="6" />
@@ -1009,7 +1013,8 @@
     <MESSAGE value="added Kontoart and Kontoaktion classes" />
     <MESSAGE value="edited Bank class methods" />
     <MESSAGE value="added JUnit for Bank" />
-    <option name="LAST_COMMIT_MESSAGE" value="added JUnit for Bank" />
+    <MESSAGE value="added Kontoauszug and List to store Kontoactions" />
+    <option name="LAST_COMMIT_MESSAGE" value="added Kontoauszug and List to store Kontoactions" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1524,8 +1529,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/verarbeitung/Konto.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="98">
-          <caret line="120" column="53" lean-forward="true" selection-start-line="120" selection-start-column="53" selection-end-line="120" selection-end-column="53" />
+        <state relative-caret-position="188">
+          <caret line="126" column="9" lean-forward="true" selection-start-line="126" selection-start-column="9" selection-end-line="126" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#3348#3349#0" expanded="true" />
