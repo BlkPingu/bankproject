@@ -16,6 +16,18 @@ public class Kontoaktion{
         this.datum = datum;
     }
 
+    public double getBetrag() {
+        return betrag;
+    }
+
+    public LocalDate getDatum() {
+        return datum;
+    }
+
+    public String getBeschreibung() {
+        return beschreibung;
+    }
+
     public void setBeschreibung(String beschreibung) {
         this.beschreibung = beschreibung;
     }

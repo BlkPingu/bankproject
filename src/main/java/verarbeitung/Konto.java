@@ -1,5 +1,10 @@
 package verarbeitung;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 /**
  * stellt ein allgemeines verarbeitung.Konto dar
  * @author ich wars
@@ -25,6 +30,7 @@ public abstract class Konto
 	 */
 	private double kontostand;
 
+	public ArrayList<Kontoaktion> kontoauszug = new ArrayList<>();
 	/**
 	 * setzt den aktuellen Kontostand
 	 * @param kontostand neuer Kontostand
@@ -37,7 +43,6 @@ public abstract class Konto
 
 	/**
 	 * setzt den neue verarbeitung.Waehrung
-	 * @param Waehrung neue verarbeitung.Waehrung
 	 */
 	protected void setWaehrung(Waehrung w) 
 	{
@@ -87,6 +92,39 @@ public abstract class Konto
 	 */
 	public final Kunde getInhaber() {
 		return this.inhaber;
+	}
+
+
+	/**
+	 * Liefert Kontoauszug als String
+	 * @return
+	 */
+	public String getKontoauszug() {
+		String k2 = null;
+		for (int i = 0; i < kontoauszug.size(); i++) {
+			String beschreibung = kontoauszug.get(i).getBeschreibung().toString();
+			double aktionBetrag = kontoauszug.get(i).getBetrag();
+			String betrag = Double.toString(aktionBetrag);
+			String datum = kontoauszug.get(i).getDatum().toString();
+			
+			String k1 = betrag + " " + beschreibung + " " + datum;
+			k2 = "\n" + k1;
+		}
+		return k2;
+	}
+
+
+	/**
+	 * entfernt alle Listeneintraege vor Datum vor aus kontoauszug
+	 * @param vor
+	 */
+	public void alleEintraegeLoeschen(LocalDate vor){
+		for (int i = 0; i < kontoauszug.size();i++){
+			LocalDate datum = kontoauszug.get(i).getDatum();
+			if (datum.isBefore(vor)) {
+				kontoauszug.remove(i);
+			}
+		}
 	}
 	
 	/**
@@ -139,6 +177,8 @@ public abstract class Konto
 			throw new IllegalArgumentException("Negativer Betrag");
 		}
 		setKontostand(getKontostand() + betrag);
+		Kontoaktion k = new Kontoaktion("Abgebung", betrag, LocalDate.now());
+		kontoauszug.add(k);
 	}
 
 	/**
@@ -167,6 +207,8 @@ public abstract class Konto
 		if (betragInWaehrung < w.umrechnen(kontostand)) 
 			return false;
 		else setKontostand(getKontostand() - betragInWaehrung);
+		Kontoaktion k = new Kontoaktion("Abgebung", betrag, LocalDate.now());
+			kontoauszug.add(k);
 			return true;
 	}
 	/**

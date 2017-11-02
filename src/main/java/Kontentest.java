@@ -16,19 +16,21 @@ public class Kontentest {
 	 * @param args wird nicht benutzt
 	 */
 	public static void main(String[] args) {
-		Kunde doro = new Kunde("Dorothea", "Hubrich", "Leipzig", LocalDate.of(1976, 7, 13));
+		Kunde ich = new Kunde("Dorothea", "Hubrich", "Leipzig", LocalDate.of(1976, 7, 13));
 		Kunde angela = new Kunde("Angela","Merkel", "Berlin",LocalDate.of(1900,6,9) );
 		Kunde brack = new Kunde("Barack", "Obama", "Washington", LocalDate.of(1950,5,12));
 		Kunde frank = new Kunde("Walther", "Steinmeier", "Berin",LocalDate.of(1940,3,20));
 		Kunde es = new Kunde("Cem", "Oezdemir", "Berlin", LocalDate.of(1920,11,11));
 		// verarbeitung.Konto k = new verarbeitung.Konto();
 
+		/*
 		Set<Kunde>menge = TreeSet<>();
 		Iterator<Kunde> it = menge.iterator();
 		while(it.hasNext()){
 			Kunde k = it.next();
 			if ("k")
 		}
+		*/
 
 
 
