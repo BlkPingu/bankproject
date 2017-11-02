@@ -8,7 +8,7 @@ import java.util.*;
 public class Bank {
     public long bankleitzahl;
     long aktuelleKontonummer=10000000;
-    HashMap<Long, Konto > konten = new HashMap<>();
+    public HashMap<Long, Konto> konten = new HashMap<>();
 
     /**
      * erstellt Bank und ihre Bankleitzahl als identifizierenden Schlüssel (ID)
@@ -64,7 +64,7 @@ public class Bank {
     public long girokontoErstellen (Kunde inhaber){
         long neueGiroKontoNr= neueKontonummer();
         konten.put(neueGiroKontoNr,new Girokonto(inhaber,neueGiroKontoNr, 500));
-        //finde Ich ja nicht noetig die Kontonummer zweimal zu speichern, aber Ich programmiere hier nur
+        //finde Ich ja nicht noetig die Kontonummer zweimal zu speichern, aber Ich programmiere hier ja nur
         return neueGiroKontoNr;
     }
     /**
@@ -77,7 +77,7 @@ public class Bank {
     public long sparbuchErstellen(Kunde inhaber){
         long neueGiroKontoNr= neueKontonummer();
         konten.put(neueGiroKontoNr,new Sparbuch(inhaber,neueGiroKontoNr));
-        //finde Ich ja nicht noetig die Kontonummer zweimal zu speichern, aber Ich programmiere hier nur
+        //finde Ich ja nicht noetig die Kontonummer zweimal zu speichern, aber Ich programmiere hier ja nur
         return neueGiroKontoNr;
     }
 
@@ -107,7 +107,7 @@ public class Bank {
      * @param auf
      * @param betrag
      */
-    public void getEinzahlen(long auf, double betrag){
+    public void geldEinzahlen(long auf, double betrag){
         if(konten.containsKey(auf) == true) {
             konten.get(auf).einzahlen(betrag,Waehrung.EUR);
         }
