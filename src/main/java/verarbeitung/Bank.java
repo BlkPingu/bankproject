@@ -8,7 +8,7 @@ import java.util.*;
 public class Bank {
     public long bankleitzahl;
     long aktuelleKontonummer=10000000;
-    public HashMap<Long, Konto> konten = new HashMap<>();
+    private HashMap<Long, Konto> konten = new HashMap<>();
 
     /**
      * erstellt Bank und ihre Bankleitzahl als identifizierenden Schlüssel (ID)

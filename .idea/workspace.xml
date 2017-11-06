@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="75bfca07-0126-4d8d-9bd1-089359c0ba72" name="Default" comment="added Kontoauszug and List to store Kontoactions">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/verarbeitung/Bank.java" afterPath="$PROJECT_DIR$/src/main/java/verarbeitung/Bank.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/verarbeitung/Konto.java" afterPath="$PROJECT_DIR$/src/main/java/verarbeitung/Konto.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -26,15 +27,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Konto.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Konto.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/verarbeitung/Konto.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="188">
-              <caret line="126" column="9" lean-forward="true" selection-start-line="126" selection-start-column="9" selection-end-line="126" selection-end-column="9" />
+            <state relative-caret-position="780">
+              <caret line="199" column="7" lean-forward="true" selection-start-line="199" selection-start-column="7" selection-end-line="199" selection-end-column="7" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3348#3349#0" expanded="true" />
-                <element signature="e#3372#3373#0" expanded="true" />
+                <element signature="e#3367#3368#0" expanded="true" />
+                <element signature="e#3391#3392#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -115,41 +116,22 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Bank.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Bank.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/verarbeitung/Bank.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="15" lean-forward="false" selection-start-line="7" selection-start-column="15" selection-end-line="7" selection-end-column="15" />
+            <state relative-caret-position="194">
+              <caret line="120" column="46" lean-forward="true" selection-start-line="120" selection-start-column="46" selection-end-line="120" selection-end-column="46" />
               <folding>
-                <marker date="1509646890000" expanded="true" signature="238:356" ph="/**...*/" />
-                <marker date="1509646890000" expanded="true" signature="391:401" ph=" { " />
-                <marker date="1509646890000" expanded="true" signature="433:439" ph=" }" />
-                <marker date="1509646890000" expanded="true" signature="445:529" ph="/**...*/" />
-                <marker date="1509646890000" expanded="true" signature="563:574" ph=" { " />
-                <marker date="1509646890000" expanded="true" signature="599:605" ph=" }" />
-                <marker date="1509646890000" expanded="true" signature="611:756" ph="/**...*/" />
-                <marker date="1509646890000" expanded="true" signature="801:812" ph=" { " />
-                <marker date="1509646890000" expanded="true" signature="854:860" ph=" }" />
-                <marker date="1509646890000" expanded="true" signature="865:947" ph="/**...*/" />
-                <marker date="1509646890000" expanded="true" signature="981:991" ph=" { " />
-                <marker date="1509646890000" expanded="true" signature="1025:1031" ph=" }" />
-                <marker date="1509646890000" expanded="true" signature="1067:1438" ph="{...}" />
-                <marker date="1509646890000" expanded="true" signature="1116:1122" ph="&lt;~&gt;" />
-                <marker date="1509646890000" expanded="true" signature="1443:1650" ph="/**...*/" />
-                <marker date="1509646890000" expanded="true" signature="1701:1978" ph="{...}" />
-                <marker date="1509646890000" expanded="true" signature="1983:2188" ph="/**...*/" />
-                <marker date="1509646890000" expanded="true" signature="2237:2508" ph="{...}" />
-                <marker date="1509646890000" expanded="true" signature="2514:2570" ph="/**...*/" />
-                <marker date="1509646890000" expanded="true" signature="2614:2722" ph="{...}" />
-                <marker date="1509646890000" expanded="true" signature="2663:2669" ph="&lt;~&gt;" />
-                <marker date="1509646890000" expanded="true" signature="2728:2901" ph="/**...*/" />
-                <marker date="1509646890000" expanded="true" signature="2983:3130" ph="{...}" />
-                <marker date="1509646890000" expanded="true" signature="3136:3247" ph="/**...*/" />
-                <marker date="1509646890000" expanded="true" signature="3302:3425" ph="{...}" />
-                <marker date="1509646890000" expanded="true" signature="3431:3566" ph="/**...*/" />
-                <marker date="1509646890000" expanded="true" signature="3612:3755" ph="{...}" />
-                <marker date="1509646890000" expanded="true" signature="3760:4113" ph="/**...*/" />
-                <marker date="1509646890000" expanded="true" signature="4222:4680" ph="{...}" />
+                <element signature="e#392#393#0" expanded="true" />
+                <element signature="e#439#440#0" expanded="true" />
+                <element signature="e#565#566#0" expanded="true" />
+                <element signature="e#605#606#0" expanded="true" />
+                <element signature="e#803#804#0" expanded="true" />
+                <element signature="e#860#861#0" expanded="true" />
+                <element signature="e#982#983#0" expanded="true" />
+                <element signature="e#1031#1032#0" expanded="true" />
+                <element signature="e#1117#1123#0" expanded="true" />
+                <element signature="e#2664#2670#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -223,13 +205,13 @@
         <option value="$PROJECT_DIR$/src/main/java/verarbeitung/GesperrtException.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/verarbeitung/Student.java" />
-        <option value="$PROJECT_DIR$/src/main/java/verarbeitung/Bank.java" />
         <option value="$PROJECT_DIR$/src/test/java/verarbeitung/BankTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/BankTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/verarbeitung/Kunde.java" />
         <option value="$PROJECT_DIR$/src/main/java/verarbeitung/Kontoaktion.java" />
         <option value="$PROJECT_DIR$/src/main/java/Kontentest.java" />
         <option value="$PROJECT_DIR$/src/main/java/verarbeitung/Konto.java" />
+        <option value="$PROJECT_DIR$/src/main/java/verarbeitung/Bank.java" />
       </list>
     </option>
   </component>
@@ -932,7 +914,7 @@
       <workItem from="1508868791155" duration="26923000" />
       <workItem from="1509034935820" duration="602000" />
       <workItem from="1509086093459" duration="17324000" />
-      <workItem from="1509550258325" duration="20969000" />
+      <workItem from="1509550258325" duration="23374000" />
     </task>
     <task id="LOCAL-00001" summary="added Kontoart and Kontoaktion classes">
       <created>1509533045959</created>
@@ -966,7 +948,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="65818000" />
+    <option name="totallyTimeSpent" value="68223000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="6" />
@@ -975,7 +957,7 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32934928" sideWeight="0.49375" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934928" sideWeight="0.49375" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1440,44 +1422,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/verarbeitung/Bank.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="15" lean-forward="false" selection-start-line="7" selection-start-column="15" selection-end-line="7" selection-end-column="15" />
-          <folding>
-            <marker date="1509646890000" expanded="true" signature="238:356" ph="/**...*/" />
-            <marker date="1509646890000" expanded="true" signature="391:401" ph=" { " />
-            <marker date="1509646890000" expanded="true" signature="433:439" ph=" }" />
-            <marker date="1509646890000" expanded="true" signature="445:529" ph="/**...*/" />
-            <marker date="1509646890000" expanded="true" signature="563:574" ph=" { " />
-            <marker date="1509646890000" expanded="true" signature="599:605" ph=" }" />
-            <marker date="1509646890000" expanded="true" signature="611:756" ph="/**...*/" />
-            <marker date="1509646890000" expanded="true" signature="801:812" ph=" { " />
-            <marker date="1509646890000" expanded="true" signature="854:860" ph=" }" />
-            <marker date="1509646890000" expanded="true" signature="865:947" ph="/**...*/" />
-            <marker date="1509646890000" expanded="true" signature="981:991" ph=" { " />
-            <marker date="1509646890000" expanded="true" signature="1025:1031" ph=" }" />
-            <marker date="1509646890000" expanded="true" signature="1067:1438" ph="{...}" />
-            <marker date="1509646890000" expanded="true" signature="1116:1122" ph="&lt;~&gt;" />
-            <marker date="1509646890000" expanded="true" signature="1443:1650" ph="/**...*/" />
-            <marker date="1509646890000" expanded="true" signature="1701:1978" ph="{...}" />
-            <marker date="1509646890000" expanded="true" signature="1983:2188" ph="/**...*/" />
-            <marker date="1509646890000" expanded="true" signature="2237:2508" ph="{...}" />
-            <marker date="1509646890000" expanded="true" signature="2514:2570" ph="/**...*/" />
-            <marker date="1509646890000" expanded="true" signature="2614:2722" ph="{...}" />
-            <marker date="1509646890000" expanded="true" signature="2663:2669" ph="&lt;~&gt;" />
-            <marker date="1509646890000" expanded="true" signature="2728:2901" ph="/**...*/" />
-            <marker date="1509646890000" expanded="true" signature="2983:3130" ph="{...}" />
-            <marker date="1509646890000" expanded="true" signature="3136:3247" ph="/**...*/" />
-            <marker date="1509646890000" expanded="true" signature="3302:3425" ph="{...}" />
-            <marker date="1509646890000" expanded="true" signature="3431:3566" ph="/**...*/" />
-            <marker date="1509646890000" expanded="true" signature="3612:3755" ph="{...}" />
-            <marker date="1509646890000" expanded="true" signature="3760:4113" ph="/**...*/" />
-            <marker date="1509646890000" expanded="true" signature="4222:4680" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/BankTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="479">
@@ -1485,14 +1429,6 @@
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/verarbeitung/Kunde.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="94" column="7" lean-forward="true" selection-start-line="94" selection-start-column="7" selection-end-line="94" selection-end-column="7" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1527,14 +1463,41 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/verarbeitung/Kunde.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="94" column="7" lean-forward="true" selection-start-line="94" selection-start-column="7" selection-end-line="94" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/verarbeitung/Konto.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="126" column="9" lean-forward="true" selection-start-line="126" selection-start-column="9" selection-end-line="126" selection-end-column="9" />
+        <state relative-caret-position="780">
+          <caret line="199" column="7" lean-forward="true" selection-start-line="199" selection-start-column="7" selection-end-line="199" selection-end-column="7" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3348#3349#0" expanded="true" />
-            <element signature="e#3372#3373#0" expanded="true" />
+            <element signature="e#3367#3368#0" expanded="true" />
+            <element signature="e#3391#3392#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/verarbeitung/Bank.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="194">
+          <caret line="120" column="46" lean-forward="true" selection-start-line="120" selection-start-column="46" selection-end-line="120" selection-end-column="46" />
+          <folding>
+            <element signature="e#392#393#0" expanded="true" />
+            <element signature="e#439#440#0" expanded="true" />
+            <element signature="e#565#566#0" expanded="true" />
+            <element signature="e#605#606#0" expanded="true" />
+            <element signature="e#803#804#0" expanded="true" />
+            <element signature="e#860#861#0" expanded="true" />
+            <element signature="e#982#983#0" expanded="true" />
+            <element signature="e#1031#1032#0" expanded="true" />
+            <element signature="e#1117#1123#0" expanded="true" />
+            <element signature="e#2664#2670#0" expanded="true" />
           </folding>
         </state>
       </provider>

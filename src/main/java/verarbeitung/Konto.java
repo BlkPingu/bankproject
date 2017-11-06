@@ -108,7 +108,7 @@ public abstract class Konto
 			String datum = kontoauszug.get(i).getDatum().toString();
 			
 			String k1 = betrag + " " + beschreibung + " " + datum;
-			k2 = "\n" + k1;
+			k2 += k1 + System.lineSeparator();
 		}
 		return k2;
 	}
