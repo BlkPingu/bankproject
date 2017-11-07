@@ -111,7 +111,7 @@ public class Kunde implements Comparable<Kunde>{
 	}
 
 	/**
-	 * gibt alle Daten des Kunden aus
+	 * gibt alle main.Daten des Kunden aus
 	 */
 	@Override
 	public String toString() {

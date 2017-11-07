@@ -40,7 +40,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>Kontentest</mainClass>
+                            <mainClass>main.Kontentest</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
