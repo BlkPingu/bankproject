@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="75bfca07-0126-4d8d-9bd1-089359c0ba72" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/verarbeitung/Bank.java" afterPath="$PROJECT_DIR$/src/main/java/verarbeitung/Bank.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/verarbeitung/Ueberweisebank.java" afterPath="$PROJECT_DIR$/src/main/java/verarbeitung/Ueberweisebank.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -934,7 +932,7 @@
       <workItem from="1508868791155" duration="26923000" />
       <workItem from="1509034935820" duration="602000" />
       <workItem from="1509086093459" duration="17324000" />
-      <workItem from="1509550258325" duration="26894000" />
+      <workItem from="1509550258325" duration="26933000" />
     </task>
     <task id="LOCAL-00001" summary="added Kontoart and Kontoaktion classes">
       <created>1509533045959</created>
@@ -978,11 +976,18 @@
       <option name="project" value="LOCAL" />
       <updated>1510072866985</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="fixed Bankserver, Ueberweisungsdaten, Ueberweisebank">
+      <created>1510128641534</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1510128641534</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="71743000" />
+    <option name="totallyTimeSpent" value="71782000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="6" />
@@ -1031,7 +1036,8 @@
     <MESSAGE value="added JUnit for Bank" />
     <MESSAGE value="added Kontoauszug and List to store Kontoactions" />
     <MESSAGE value="added Bankserver, Ueberweisungsdaten, Ueberweisebank" />
-    <option name="LAST_COMMIT_MESSAGE" value="added Bankserver, Ueberweisungsdaten, Ueberweisebank" />
+    <MESSAGE value="fixed Bankserver, Ueberweisungsdaten, Ueberweisebank" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed Bankserver, Ueberweisungsdaten, Ueberweisebank" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
