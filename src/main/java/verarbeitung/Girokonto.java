@@ -114,7 +114,7 @@ public class Girokonto extends Konto {
     }
 
 	@Override
-	public boolean abheben(double betrag) throws GesperrtException{
+	public boolean abheben(double betrag, Waehrung waehrung) throws GesperrtException{
 		if (betrag < 0 ) {
 			throw new IllegalArgumentException();
 		}

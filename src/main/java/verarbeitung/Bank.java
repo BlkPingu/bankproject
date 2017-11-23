@@ -1,14 +1,22 @@
 package verarbeitung;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Created by Tobias on 29/10/17.
  */
-public class Bank {
+public class Bank{
     public long bankleitzahl;
     long aktuelleKontonummer=10000000;
     public HashMap<Long, Konto> konten = new HashMap<>();
+    private List<Konto> kontoListe = new ArrayList<>(konten.values());
+
+    private List<Kunde> vollesKontoKunden = new ArrayList<>();
+    private List<Kunde> reicheKunden = new ArrayList<>();
+
+
 
     /**
      * erstellt Bank und ihre Bankleitzahl als identifizierenden Schlüssel (ID)
@@ -41,6 +49,58 @@ public class Bank {
     public String getAlleKonten(){
         return konten.keySet().toString();
     }
+
+    /**
+     * sperrt Kunden mit negativem Kontostand
+     */
+    public void pleitegeierSperren(){
+        kontoListe.stream().filter(konto -> konto.getKontostand()<0).forEach(konto -> konto.sperren());
+    }
+
+    /**
+     * gibt Liste mit Kunden deren Kontostand groeßer/gleich  minimum ist zurueck
+     * @param minimum
+     * @return Liste mit groeßer/gleich minimum auf dem Konto
+     */
+    public List<Kunde> getKundenMitVollemKonto(double minimum){
+        kontoListe.stream()
+                .filter(k -> k.getKontostand()>=minimum)
+                .forEach(k -> vollesKontoKunden.add(k.getInhaber()));
+        return vollesKontoKunden;
+    }
+
+    //getAlleReichenKunden(double minimum)
+
+    //Idee:
+    // 1) Einzigartige Inhaber der Konten aus konten in Hashmap<Kunde, Double> "Kundenwert" speichen mit Guthaben 0.
+    // 2) Jeden eintrag in konten mit getKontostand nach Guthaben durchsuchen und dem Key in "Kundenwert als Value aufaddieren.
+    // 3) Kundenwert nach Keys (Kunden) durchsuchen die eine Value > minimum haben. Namen als Liste "reicheKunden" zurueckgeben.
+
+    //Issues:
+    //Probleme mit Hashmap Kundenwert. Hashmap hat auf aufruf
+    // des Keys mit Kundenwert.get() ein Double zurueckgegeben.
+
+    /*
+    public List<Kunde> getAlleReichenKunden(double minimum){
+        int gesamtwert;
+
+        Map<Kunde, Double> Kundenwert = new HashMap<>();
+
+        for (Konto value : konten.values()) {
+            if(Kundenwert.containsKey(value.getInhaber())){
+
+            }
+            else {
+                Kundenwert.put(value.getInhaber(), 0.0);
+            }
+        }
+        for(Konto : kontoListe){
+            Kundenwert.get konto.getKontostand()
+        }
+
+        return ;
+    }
+    */
 
     public long neueKontonummer() {
         List<Long> kontonummern = new ArrayList<Long>(konten.keySet());

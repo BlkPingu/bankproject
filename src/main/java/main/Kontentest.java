@@ -44,7 +44,7 @@ public class Kontentest {
 		meinSpar.einzahlen(50,Waehrung.EUR);
 		try
 		{
-			boolean hatGeklappt = meinSpar.abheben(70);
+			boolean hatGeklappt = meinSpar.abheben(70, Waehrung.EUR);
 			System.out.println("Abhebung hat geklappt: " + hatGeklappt);
 			System.out.println(meinSpar);
 		}
@@ -55,7 +55,7 @@ public class Kontentest {
 		
 		Konto k = new Girokonto();  //kontostand muesste 0 sein
 		try {
-			k.abheben(100);  //-100
+			k.abheben(100, Waehrung.EUR);  //-100
 			//k.aufKonsole();
 		} catch (GesperrtException e) {}
 		

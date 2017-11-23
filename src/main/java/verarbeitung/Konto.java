@@ -60,6 +60,7 @@ public abstract class Konto
 	 */
 	private boolean gesperrt;
 
+
 	/**
 	 * Setzt die beiden Eigenschaften kontoinhaber und kontonummer auf die angegebenen Werte,
 	 * der anfaengliche Kontostand wird auf 0 gesetzt.
@@ -77,14 +78,7 @@ public abstract class Konto
 		this.gesperrt = false;
 		this.w = Waehrung.EUR;
 	}
-	
-	/**
-	 * setzt alle Eigenschaften des Kontos auf Standardwerte
-	 */
-	public Konto() {
-		this(Kunde.MUSTERMANN, 1234567);
-		// noch was tun
-	}
+
 
 	/**
 	 * liefert den Kontoinhaber zurueck
@@ -225,17 +219,6 @@ public abstract class Konto
 		return ausgabe;
 	}
 
-	/**
-	 * Mit dieser Methode wird der geforderte Betrag vom verarbeitung.Konto abgehoben, wenn es nicht gesperrt ist.
-	 *
-	 * @param betrag double
-	 * @throws GesperrtException wenn das verarbeitung.Konto gesperrt ist
-	 * @throws IllegalArgumentException wenn der betrag negativ ist 
-	 * @return true, wenn die Abhebung geklappt hat, 
-	 * 		   false, wenn sie abgelehnt wurde
-	 */
-	public abstract boolean abheben(double betrag) throws GesperrtException;
-	
 	/**
 	 * sperrt das verarbeitung.Konto, Aktionen zum Schaden des Benutzers sind nicht mehr moeglich.
 	 */

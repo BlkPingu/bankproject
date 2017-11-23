@@ -40,7 +40,8 @@ public class Student extends Kunde {
      * @param letzteStudienbescheinigungSemester
      * @param aktuelleStudienBescheinigung
      */
-    public Student(String uniname, String studienfach, LocalDate studienende, int letzteStudienbescheinigungSemester, boolean aktuelleStudienBescheinigung){
+    public Student(String vorname, String nachname, String adresse, LocalDate gebdat, String uniname, String studienfach, LocalDate studienende, int letzteStudienbescheinigungSemester, boolean aktuelleStudienBescheinigung){
+        super(vorname, nachname, adresse, gebdat);
         this.uniname = uniname;
         this.studienfach = studienfach;
         this.studienende = studienende;

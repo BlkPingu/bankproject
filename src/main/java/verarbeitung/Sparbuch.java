@@ -27,10 +27,7 @@ public class Sparbuch extends Konto {
 	 * Monat und Jahr der letzten Abhebung
 	 */
 	private LocalDate zeitpunkt = LocalDate.now();
-	
-	public Sparbuch() {
-		zinssatz = 0.03;
-	}
+
 
 	public Sparbuch(Kunde inhaber, long kontonummer) {
 		super(inhaber, kontonummer);
@@ -47,7 +44,7 @@ public class Sparbuch extends Konto {
 	}
 
 	@Override
-	public boolean abheben (double betrag) throws GesperrtException{
+	public boolean abheben (double betrag, Waehrung waehrung) throws GesperrtException{
 		if (betrag < 0 ) {
 			throw new IllegalArgumentException();
 		}

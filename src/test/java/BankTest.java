@@ -2,6 +2,8 @@ import org.junit.Test;
 
 import verarbeitung.*;
 
+import java.time.LocalDate;
+
 import static org.junit.Assert.*;
 
 /**
@@ -10,7 +12,7 @@ import static org.junit.Assert.*;
 public class BankTest {
 
     Bank b = new Bank(1112131415);
-    Kunde k1 = new Kunde("Max","Mustermann","Musterstraße 1","11.12.1913");
+    Kunde k1 = new Kunde("Max","Mustermann","Musterstraße 1", LocalDate.of(2000,3,1));
 
     @Test
     public void getBankleitzahl() throws Exception {

@@ -55,12 +55,6 @@ public class Kunde implements Comparable<Kunde>{
 	 */
 	private LocalDate geburtstag;
 
-	/**
-	 * erzeugt einen Standardkunden
-	 */
-	public Kunde() {
-		this("Max", "Mustermann", "Adresse", LocalDate.now());
-	}
 
 	/**
 	 * Erzeugt einen Kunden mit den uebergebenen Werten
@@ -83,20 +77,7 @@ public class Kunde implements Comparable<Kunde>{
 		Runtime.getRuntime().addShutdownHook(t);
 	}
 
-	/**
-	 * Erzeugt einen Kunden mit den uebergebenen Werten
-	 * 
-	 * @param vorname
-	 * @param nachname
-	 * @param adresse
-	 * @param gebdat
-	 *            im Format tt.mm.yy
-	 * @throws IllegalArgumentException wenn einer der Parameter null ist
-	 */
-	public Kunde(String vorname, String nachname, String adresse, String gebdat)  {
-		this(vorname, nachname, adresse, LocalDate.parse(gebdat,DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)));
-	}
-	
+
 	/**
 	 * Klasse fuer Aufrumarbeiten
 	 * @author Doro
