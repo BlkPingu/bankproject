@@ -1,11 +1,12 @@
 package verarbeitung;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
  * Created by Tobias on 29/10/17.
  */
-public class Kontoaktion{
+public class Kontoaktion implements Serializable{
     String beschreibung;
     double betrag;
     LocalDate datum;

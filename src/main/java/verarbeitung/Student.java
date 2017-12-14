@@ -1,10 +1,11 @@
 package verarbeitung;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
  * Created by Tobias on 25/10/17.
  */
-public class Student extends Kunde {
+public class Student extends Kunde implements Serializable{
     /**
      * Definition des Namens der Universitaet von Student
      */

@@ -1,6 +1,8 @@
 package verarbeitung;
 
-public enum Waehrung
+import java.io.Serializable;
+
+public enum Waehrung implements Serializable
 {
 	/**
 	 *Konstanten der Klasse verarbeitung.Waehrung

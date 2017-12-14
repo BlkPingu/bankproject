@@ -1,41 +1,55 @@
 package verarbeitung;
-
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 /**
  * stellt ein allgemeines verarbeitung.Konto dar
  * @author ich wars
  */
-public abstract class Konto
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public abstract class Konto implements Serializable
 {
 	/**
 	 * Die verarbeitung.Waehrung
-	 */
+	*/
 	private Waehrung w;
-	/** 
+	/**
 	 * der Kontoinhaber
-	 */
+	*/
 	private Kunde inhaber;
 
 	/**
 	 * die Kontonummer
-	 */
+	*/
 	private final long nummer;
 
 	/**
 	 * der aktuelle Kontostand
-	 */
+	*/
 	private double kontostand;
 
 	public ArrayList<Kontoaktion> kontoauszug = new ArrayList<>();
 	/**
 	 * setzt den aktuellen Kontostand
 	 * @param kontostand neuer Kontostand
-	 */
-	protected void setKontostand(double kontostand) 
+	*/
+	protected void setKontostand(double kontostand)
 	{
 		this.kontostand = kontostand;
 	}
@@ -43,32 +57,31 @@ public abstract class Konto
 
 	/**
 	 * setzt den neue verarbeitung.Waehrung
-	 */
-	protected void setWaehrung(Waehrung w) 
+	*/
+	protected void setWaehrung(Waehrung w)
 	{
 		this.w = w;
 	}
 
-	public final Waehrung getWaehrung() 
+	public final Waehrung getWaehrung()
 	{
 		return this.w;
-	} 
+	}
 
 	/**
 	 * Wenn das verarbeitung.Konto gesperrt ist (gesperrt = true), koennen keine Aktionen daran mehr vorgenommen werden,
 	 * die zum Schaden des Kontoinhabers waeren (abheben, Inhaberwechsel)
-	 */
+	*/
 	private boolean gesperrt;
 
 
-	/**
-	 * Setzt die beiden Eigenschaften kontoinhaber und kontonummer auf die angegebenen Werte,
+	/** Setzt die beiden Eigenschaften kontoinhaber und kontonummer auf die angegebenen Werte,
 	 * der anfaengliche Kontostand wird auf 0 gesetzt.
 	 *
 	 * @param inhaber verarbeitung.Kunde
 	 * @param kontonummer long
 	 * @throws IllegalArgumentException wenn der Inhaber null
-	 */
+	*/
 	public Konto(Kunde inhaber, long kontonummer) {
 		if(inhaber == null)
 			throw new IllegalArgumentException("Inhaber darf nicht null sein!");
@@ -83,7 +96,7 @@ public abstract class Konto
 	/**
 	 * liefert den Kontoinhaber zurueck
 	 * @return   verarbeitung.Kunde
-	 */
+	*/
 	public final Kunde getInhaber() {
 		return this.inhaber;
 	}
@@ -92,7 +105,7 @@ public abstract class Konto
 	/**
 	 * Liefert Kontoauszug als String
 	 * @return
-	 */
+	*/
 	public String getKontoauszug() {
 		String k2 = null;
 		for (int i = 0; i < kontoauszug.size(); i++) {
@@ -100,7 +113,7 @@ public abstract class Konto
 			double aktionBetrag = kontoauszug.get(i).getBetrag();
 			String betrag = Double.toString(aktionBetrag);
 			String datum = kontoauszug.get(i).getDatum().toString();
-			
+
 			String k1 = betrag + " " + beschreibung + " " + datum;
 			k2 += k1 + System.lineSeparator();
 		}
@@ -111,7 +124,7 @@ public abstract class Konto
 	/**
 	 * entfernt alle Listeneintraege vor Datum vor aus kontoauszug
 	 * @param vor
-	 */
+	*/
 	public void alleEintraegeLoeschen(LocalDate vor){
 		for (int i = 0; i < kontoauszug.size();i++){
 			LocalDate datum = kontoauszug.get(i).getDatum();
@@ -120,7 +133,7 @@ public abstract class Konto
 			}
 		}
 	}
-	
+
 	/**
 	 * setzt den Kontoinhaber
 	 * @param kinh   neuer Kontoinhaber
@@ -131,15 +144,15 @@ public abstract class Konto
 		if (kinh == null)
 			throw new IllegalArgumentException("Der Inhaber darf nicht null sein!");
 		if(this.gesperrt)
-			throw new GesperrtException(this.nummer);        
+			throw new GesperrtException(this.nummer);
 		this.inhaber = kinh;
 
 	}
-	
+
 	/**
 	 * liefert den aktuellen Kontostand
 	 * @return   double
-	 */
+	*/
 	public final double getKontostand() {
 		return kontostand;
 	}
@@ -147,7 +160,7 @@ public abstract class Konto
 	/**
 	 * liefert die Kontonummer zurueck
 	 * @return   long
-	 */
+	*/
 	public final long getKontonummer() {
 		return nummer;
 	}
@@ -159,12 +172,12 @@ public abstract class Konto
 	public final boolean isGesperrt() {
 		return gesperrt;
 	}
-	
+
 	/**
 	 * Erhoeht den Kontostand um den eingezahlten Betrag.
 	 *
 	 * @param betrag double
-	 * @throws IllegalArgumentException wenn der betrag negativ ist 
+	 * @throws IllegalArgumentException wenn der betrag negativ ist
 	 */
 	public void einzahlen(double betrag, Waehrung w) {
 		if (betrag < 0) {
@@ -198,7 +211,7 @@ public abstract class Konto
 	public boolean abheben(double betrag, Waehrung w) throws GesperrtException
 	{
 		double betragInWaehrung = w.umrechnen(betrag);
-		if (betragInWaehrung < w.umrechnen(kontostand)) 
+		if (betragInWaehrung < w.umrechnen(kontostand))
 			return false;
 		else setKontostand(getKontostand() - betragInWaehrung);
 		Kontoaktion k = new Kontoaktion("Abgebung", betrag, LocalDate.now());
@@ -221,23 +234,23 @@ public abstract class Konto
 
 	/**
 	 * sperrt das verarbeitung.Konto, Aktionen zum Schaden des Benutzers sind nicht mehr moeglich.
-	 */
+	*/
 	public final void sperren() {
 		this.gesperrt = true;
 	}
 
 	/**
 	 * entsperrt das verarbeitung.Konto, alle Kontoaktionen sind wieder moeglich.
-	 */
+	*/
 	public final void entsperren() {
 		this.gesperrt = false;
 	}
-	
-	
+
+
 	/**
 	 * liefert eine String-Ausgabe, wenn das verarbeitung.Konto gesperrt ist
 	 * @return "GESPERRT", wenn das verarbeitung.Konto gesperrt ist, ansonsten ""
-	 */
+	*/
 	public final String getGesperrtText()
 	{
 		if (this.gesperrt)
@@ -249,20 +262,19 @@ public abstract class Konto
 			return "";
 		}
 	}
-	
+
 	/**
 	 * liefert die ordentlich formatierte Kontonummer
 	 * @return auf 10 Stellen formatierte Kontonummer
-	 */
+	*/
 	public String getKontonummerFormatiert()
 	{
 		return String.format("%10d", this.nummer);
 	}
-	
 	/**
 	 * liefert den ordentlich formatierten Kontostand
 	 * @return formatierter Kontostand mit 2 Nachkommastellen und Waehrungssymbol Euro
-	 */
+	*/
 	public String getKontostandFormatiert()
 	{
 		return String.format("%10.2f Euro" , this.getKontostand());
@@ -272,7 +284,7 @@ public abstract class Konto
 	 * wen sie die gleiche Kontonummer haben
 	 * @param other
 	 * @return true, wenn beide Konten die gleiche Nummer haben
-	 */
+	*/
 	@Override
 	public boolean equals(Object other)
 	{
@@ -287,17 +299,17 @@ public abstract class Konto
 		else
 			return false;
 	}
-	
+
 	@Override
 	public int hashCode()
 	{
 		return 31 + (int) (this.nummer ^ (this.nummer >>> 32));
 	}
 
-	/*
+
 	public void aufKonsole()
 	{
 		System.out.println(this.toString());
 	}
-	*/
+
 }

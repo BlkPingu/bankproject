@@ -1,5 +1,4 @@
-import org.junit.Test;
-
+import org.junit.*;
 import verarbeitung.*;
 
 import java.time.LocalDate;
@@ -11,21 +10,43 @@ import static org.junit.Assert.*;
  */
 public class BankTest {
 
-    Bank b = new Bank(1112131415);
-    Kunde k1 = new Kunde("Max","Mustermann","Musterstraße 1", LocalDate.of(2000,3,1));
+    Bank b1 = new Bank(1112131415);
+    Bank b2 = new Bank(123412445);
+
+    @Test
+    public void clonetest() throws Exception{
+        b1.girokontoErstellen(Kunde.MUSTERMANN);
+        b2 = b1.clone();
+
+        b1.geldEinzahlen(10000001,200);
+        b2.geldEinzahlen(10000001,100);
+        assertNotEquals(b1.getKontostand(10000001), b2.getKontostand(10000001),0.1);
+
+    }
+
+
+    @Test
+    public void clonetest2() throws Exception{
+        b1.girokontoErstellen(Kunde.MUSTERMANN);
+        b1.girokontoErstellen(Kunde.MUSTERMANN);
+        b2 = b1.clone();
+
+        assertTrue(b1.konten.containsKey(10000001L));
+    }
+
 
     @Test
     public void getBankleitzahl() throws Exception {
-        assertNotNull("Not NULL", b.getBankleitzahl());
-        assertEquals(1112131415,b.bankleitzahl);
+        assertNotNull("Not NULL", b1.getBankleitzahl());
+        assertEquals(1112131415,b1.bankleitzahl);
     }
 
     //funktioniert genau wie Sparbuch erstellen
     @Test
     public void girokontoErstellen() throws Exception {
-        int vorErstellen =b.getAlleKontonummern().size();
-        b.girokontoErstellen(k1);
-        int nachErstellen = b.getAlleKontonummern().size();
+        int vorErstellen =b1.getAlleKontonummern().size();
+        b1.girokontoErstellen(Kunde.MUSTERMANN);
+        int nachErstellen = b1.getAlleKontonummern().size();
 
         assertNotEquals(nachErstellen, vorErstellen);
     }
@@ -34,35 +55,34 @@ public class BankTest {
     //funktioniert wie einzahlen
     @Test
     public void geldAbheben() throws Exception {
-        b.girokontoErstellen(k1);
-        b.geldEinzahlen(10000000,1000);
-        b.geldAbheben(10000000, 1000);
-        assertNotEquals(0,b.konten.get(10000000).getKontostand());
+        b1.girokontoErstellen(Kunde.MUSTERMANN);
+        b1.geldEinzahlen(10000001L,1000.01);
+        b1.geldAbheben(10000001L, 1000);
+        assertEquals(0,b1.konten.get(10000001L).getKontostand(), 0.5);
     }
 
 
     @Test
     public void kontoLoeschen() throws Exception {
-        b.girokontoErstellen(k1);
-        b.kontoLoeschen(b.getAlleKontonummern().get(1));
-        assertEquals(0,b.getAlleKontonummern().size());
+        b1.girokontoErstellen(Kunde.MUSTERMANN);
+
+
+        b1.kontoLoeschen(10000001);
+
+
+        assertEquals(0,b1.getAlleKontonummern().size());
     }
 
     @Test
     public void geldUeberweisen() throws Exception {
-        b.girokontoErstellen(k1);
-        b.girokontoErstellen(k1);
-        b.geldEinzahlen(b.getAlleKontonummern().get(1),500);
-        double Kontostand1 = b.getKontostand(b.getAlleKontonummern().get(1));
-        assertEquals(0,Kontostand1,0.1);
 
-
-        b.geldUeberweisen(b.getAlleKontonummern().get(1),b.getAlleKontonummern().get(2),500,"Test");
-
-        double kontostand2 = b.getKontostand(b.getAlleKontonummern().get(1));
-        double kontostand3 = b.getKontostand(b.getAlleKontonummern().get(2));
-        assertEquals(0,kontostand2,0.1);
-        assertEquals(500,kontostand3,0.1);
+        b1.girokontoErstellen(Kunde.MUSTERMANN); //0
+        b1.girokontoErstellen(Kunde.MUSTERMANN); //1
+        b1.geldEinzahlen(b1.getAlleKontonummern().get(0),500);
+        assertEquals(500,b1.getKontostand(b1.getAlleKontonummern().get(0)),0.5);
+        b1.geldUeberweisen(b1.getAlleKontonummern().get(0),b1.getAlleKontonummern().get(1),500,"test");
+        assertEquals(0,b1.getKontostand(b1.getAlleKontonummern().get(0)),0.5);
+        assertEquals(500,b1.getKontostand(b1.getAlleKontonummern().get(1)),0.5);
 
     }
 

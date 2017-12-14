@@ -5,4 +5,5 @@ package verarbeitung;
  */
 public interface KontostandAktion {
     public boolean kontoStandReaktion (double minimum);
+
 }

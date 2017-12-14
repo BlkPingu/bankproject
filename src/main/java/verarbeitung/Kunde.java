@@ -1,5 +1,6 @@
 package verarbeitung;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -14,16 +15,20 @@ import java.util.Locale;
  * @author Dorothea Hubrich
  * @version 1.0
  */
-public class Kunde implements Comparable<Kunde>{
+public class Kunde implements Comparable<Kunde>, Serializable{
 	/**
 	 * Ein Musterkundengruppe
 	 */
+
+
 	public static final Kunde MUSTERMANN = new Kunde("Max", "Mustermann", "zuhause", LocalDate.now());
+	/*
 	public static final Kunde DORO = new Kunde("Dorothea", "Hubrich", "Leipzig", LocalDate.of(1976, 7, 13));
 	public static final Kunde ANGELA = new Kunde("Angela","Merkel", "Berlin",LocalDate.of(1900,6,9) );
 	public static final Kunde BARACK = new Kunde("Barack", "Obama", "Washington", LocalDate.of(1950,5,12));
 	public static final Kunde FRANK = new Kunde("Walther", "Steinmeier", "Berin",LocalDate.of(1940,3,20));
 	public static final Kunde CEM = new Kunde("Cem", "Oezdemir", "Berlin", LocalDate.of(1920,11,11));
+	*/
 
 	/**
 	 * englische oder deutsche Anrede, je nach den Systemeinstellungen
@@ -86,9 +91,7 @@ public class Kunde implements Comparable<Kunde>{
 	private class Zerstoerer implements Runnable
 	{
 		@Override
-		public void run() {
-			System.out.println("verarbeitung.Kunde zerstoert");
-		}
+		public void run(){}
 	}
 
 	/**

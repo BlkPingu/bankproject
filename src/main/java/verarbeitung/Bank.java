@@ -1,5 +1,8 @@
 package verarbeitung;
 
+import jdk.internal.util.xml.impl.Input;
+
+import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -7,7 +10,7 @@ import java.util.stream.Stream;
 /**
  * Created by Tobias on 29/10/17.
  */
-public class Bank{
+public class Bank implements Serializable, Cloneable{
     public long bankleitzahl;
     long aktuelleKontonummer=10000000;
     public HashMap<Long, Konto> konten = new HashMap<>();
@@ -15,6 +18,35 @@ public class Bank{
 
     private List<Kunde> vollesKontoKunden = new ArrayList<>();
     private List<Kunde> reicheKunden = new ArrayList<>();
+
+    /*
+    File path = new File("bankData.ser");
+    File clearTextBank = new File("clearBankData.ser");
+
+
+    public void clone(File path, Bank b) throws IOException,ClassNotFoundException{
+        OutputStream outStream = new FileOutputStream(path);
+        outStream.write(Serializer.serialize(this));
+        outStream.close();
+
+
+        InputStream inputStream = new FileInputStream(path);
+        inputStream.read(Serializer.deserialize());
+        InputStream ois = new ObjectInputStream(inputStream);
+        ois.close();
+
+    }
+
+
+    public void toFile() throws FileNotFoundException {
+        PrintWriter printWriter = new PrintWriter(clearTextBank);
+        printWriter.printf("Bank: %i", KontoNummer);
+
+        printWriter.printf
+
+    }
+    */
+
 
 
 
@@ -54,7 +86,7 @@ public class Bank{
      * sperrt Kunden mit negativem Kontostand
      */
     public void pleitegeierSperren(){
-        kontoListe.stream().filter(konto -> konto.getKontostand()<0).forEach(konto -> konto.sperren());
+        konten.values().stream().filter(konto -> konto.getKontostand()<0).forEach(konto -> konto.sperren());
     }
 
     /**
@@ -63,10 +95,24 @@ public class Bank{
      * @return Liste mit groeßer/gleich minimum auf dem Konto
      */
     public List<Kunde> getKundenMitVollemKonto(double minimum){
-        kontoListe.stream()
+        konten.values().stream()
                 .filter(k -> k.getKontostand()>=minimum)
                 .forEach(k -> vollesKontoKunden.add(k.getInhaber()));
         return vollesKontoKunden;
+    }
+
+    @Override
+    public Bank clone(){
+        try(ByteArrayOutputStream baos = new ByteArrayOutputStream()){
+            try(ObjectOutputStream oos = new ObjectOutputStream(baos)){
+                oos.writeObject(this);
+            }
+            byte[] baosArray = baos.toByteArray();
+            ByteArrayInputStream bais = new ByteArrayInputStream(baosArray);
+            ObjectInputStream oois = new ObjectInputStream(bais);
+            return (Bank) oois.readObject();
+        }catch(Exception e){}
+        return null;
     }
 
     //getAlleReichenKunden(double minimum)
@@ -102,6 +148,20 @@ public class Bank{
     }
     */
 
+    public List<Kunde> getAlleReichenKunden(double minimum){
+        return konten.values().stream().collect(Collectors.groupingBy
+                                                                (Konto::getInhaber))
+                .entrySet().stream()
+                .filter(
+                        kundeListEntry -> kundeListEntry.getValue().stream()
+                        .map(Konto::getKontostand)
+                        .reduce(0.0, (a,b) -> a + b)
+                        >= minimum
+                )
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
+    }
+
     public long neueKontonummer() {
         List<Long> kontonummern = new ArrayList<Long>(konten.keySet());
         aktuelleKontonummer++;
@@ -114,6 +174,7 @@ public class Bank{
         }
         return aktuelleKontonummer;
     }
+
     /**
      * Erstellt:
      * -Girokonto fuer angebebenen Kunden (mit neuer einzigartiger ID)
@@ -156,6 +217,7 @@ public class Bank{
      * @param betrag
      * @return true/false stellvertretend für Erfolg/Misserfolg
      */
+
     public boolean geldAbheben(long von, double betrag) throws GesperrtException {
         if(konten.containsKey(von) == true) {
             return konten.get(von).abheben(betrag,Waehrung.EUR);
@@ -185,22 +247,25 @@ public class Bank{
         }else return false;
     }
     /**
-     * Ueberweist einen Betrag betrag von Konto mit Kontonummer vonKontonr nach Konto mit Kontonummer nachKontonr
+     * Ueberweist einen Betrag betrag von Konto mit Kontonummer vonKontonr nach Konto mit Kontonummer nach
      * versehen mit einem Verwendungszweck als String verwendungszweck
-     * @param vonKontonr
-     * @param nachKontonr
+     * @param von
+     * @param nach
      * @param betrag
      * @param verwendungszweck
      * @return true/false fuer Erfolg oder Misserfolg
      */
-    public boolean geldUeberweisen(long vonKontonr, long nachKontonr,double betrag, String verwendungszweck){
-        if (konten.containsKey(vonKontonr)== true & konten.containsKey(nachKontonr) == true){
-            double vonkontostand = konten.get(vonKontonr).getKontostand();
-            konten.get(vonKontonr).setKontostand(vonkontostand -= betrag);
+    public boolean geldUeberweisen(long von, long nach,double betrag, String verwendungszweck){
+        if (this.konten.containsKey(von) & konten.containsKey(nach)){
+            if (this.konten.get(von).getKontostand() >= betrag) {
 
-            double nachKontostand = konten.get(nachKontonr).getKontostand();
-            konten.get(vonKontonr).setKontostand(nachKontostand += betrag);
-            return true;
+
+                this.konten.get(von).setKontostand(konten.get(von).getKontostand() - betrag);
+
+                this.konten.get(nach).setKontostand(konten.get(nach).getKontostand() + betrag);
+
+                return true;
+            }else return false;
         }else return false;
     }
 
