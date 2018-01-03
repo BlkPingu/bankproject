@@ -1,6 +1,7 @@
 package verarbeitung;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 /**
  * Ein verarbeitung.Girokonto
@@ -20,6 +21,17 @@ public class Girokonto extends Konto implements Serializable {
 	{
 		super(Kunde.MUSTERMANN, 99887766);
 		this.dispo = 500;
+	}
+
+	public boolean abheben(double betrag, Waehrung w) throws GesperrtException
+	{
+		double betragInWaehrung = w.umrechnen(betrag);
+		if (betragInWaehrung < w.umrechnen(kontostand))
+			return false;
+		else setKontostand(getKontostand() - betragInWaehrung);
+		Kontoaktion k = new Kontoaktion("Abgebung", betrag, LocalDate.now());
+		kontoauszug.add(k);
+		return true;
 	}
 	
 	/**
@@ -71,10 +83,10 @@ public class Girokonto extends Konto implements Serializable {
      * @throws IllegalArgumentException wenn der Betrag negativ ist oder
      * 									empfaenger oder verwendungszweck null ist
      */
-    public boolean ueberweisungAbsenden(double betrag, 
-    		String empfaenger, long nachKontonr, 
-    		long nachBlz, String verwendungszweck) 
-    				throws GesperrtException 
+    public boolean ueberweisungAbsenden(double betrag,
+    		String empfaenger, long nachKontonr,
+    		long nachBlz, String verwendungszweck)
+    				throws GesperrtException
     {
       if (this.isGesperrt())
             throw new GesperrtException(this.getKontonummer());
@@ -114,21 +126,5 @@ public class Girokonto extends Konto implements Serializable {
     	+ "Dispo: " + this.dispo + System.lineSeparator();
     	return ausgabe;
     }
-
-	@Override
-	public boolean abheben(double betrag, Waehrung waehrung) throws GesperrtException{
-		if (betrag < 0 ) {
-			throw new IllegalArgumentException();
-		}
-		if(this.isGesperrt())
-			throw new GesperrtException(this.getKontonummer());
-		if (getKontostand() - betrag >= - dispo)
-		{
-			setKontostand(getKontostand() - betrag);
-			return true;
-		}
-		else
-			return false;
-	}
 
 }

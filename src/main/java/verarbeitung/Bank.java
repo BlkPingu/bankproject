@@ -13,42 +13,12 @@ import java.util.stream.Stream;
 public class Bank implements Serializable, Cloneable{
     public long bankleitzahl;
     long aktuelleKontonummer=10000000;
+    boolean angemeldet = false;
     public HashMap<Long, Konto> konten = new HashMap<>();
     private List<Konto> kontoListe = new ArrayList<>(konten.values());
 
     private List<Kunde> vollesKontoKunden = new ArrayList<>();
     private List<Kunde> reicheKunden = new ArrayList<>();
-
-    /*
-    File path = new File("bankData.ser");
-    File clearTextBank = new File("clearBankData.ser");
-
-
-    public void clone(File path, Bank b) throws IOException,ClassNotFoundException{
-        OutputStream outStream = new FileOutputStream(path);
-        outStream.write(Serializer.serialize(this));
-        outStream.close();
-
-
-        InputStream inputStream = new FileInputStream(path);
-        inputStream.read(Serializer.deserialize());
-        InputStream ois = new ObjectInputStream(inputStream);
-        ois.close();
-
-    }
-
-
-    public void toFile() throws FileNotFoundException {
-        PrintWriter printWriter = new PrintWriter(clearTextBank);
-        printWriter.printf("Bank: %i", KontoNummer);
-
-        printWriter.printf
-
-    }
-    */
-
-
-
 
     /**
      * erstellt Bank und ihre Bankleitzahl als identifizierenden Schlüssel (ID)
@@ -63,6 +33,8 @@ public class Bank implements Serializable, Cloneable{
      * @return die Bankleitzahl
      */
     public long getBankleitzahl() {
+
+
         return this.bankleitzahl;
     }
 
@@ -74,6 +46,41 @@ public class Bank implements Serializable, Cloneable{
     public double getKontostand(long nummer) {
         return konten.get(nummer).getKontostand();
     }
+
+    public void setAngemeldet(boolean angemeldet) {
+        this.angemeldet = angemeldet;
+    }
+
+
+    /**
+     * toggelt den Anmeldestatus von false auf true
+     * @param kontonummer
+     * @return
+     */
+
+
+    public void anmelden(long kontonummer){
+        setAngemeldet(true);
+    }
+
+    /**
+     * toggelt den Anmeldestatus von true auf false
+     * @param kontonummer
+     * @return
+     */
+    public void abmelden(long kontonummer){
+            setAngemeldet(false);
+    }
+
+
+    public boolean istAngemeldet(long kontonummer){
+        return this.angemeldet;
+    }
+
+
+
+
+
     /**
      * gibt alle Kontoen zurueck
      * @return Liste mit allen Konten
