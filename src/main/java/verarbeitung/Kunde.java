@@ -1,5 +1,9 @@
 package verarbeitung;
 
+import javafx.beans.property.*;
+import javafx.beans.property.ReadOnlyStringProperty;
+
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -22,13 +26,6 @@ public class Kunde implements Comparable<Kunde>, Serializable{
 
 
 	public static final Kunde MUSTERMANN = new Kunde("Max", "Mustermann", "zuhause", LocalDate.now());
-	/*
-	public static final Kunde DORO = new Kunde("Dorothea", "Hubrich", "Leipzig", LocalDate.of(1976, 7, 13));
-	public static final Kunde ANGELA = new Kunde("Angela","Merkel", "Berlin",LocalDate.of(1900,6,9) );
-	public static final Kunde BARACK = new Kunde("Barack", "Obama", "Washington", LocalDate.of(1950,5,12));
-	public static final Kunde FRANK = new Kunde("Walther", "Steinmeier", "Berin",LocalDate.of(1940,3,20));
-	public static final Kunde CEM = new Kunde("Cem", "Oezdemir", "Berlin", LocalDate.of(1920,11,11));
-	*/
 
 	/**
 	 * englische oder deutsche Anrede, je nach den Systemeinstellungen
@@ -54,7 +51,7 @@ public class Kunde implements Comparable<Kunde>, Serializable{
 	/**
 	 * Die Adresse
 	 */
-	private String adresse;
+	private ReadOnlyStringProperty adresse;
 	/**
 	 * Geburtstag
 	 */
@@ -75,7 +72,7 @@ public class Kunde implements Comparable<Kunde>, Serializable{
 			throw new IllegalArgumentException("null als Parameter nich erlaubt");
 		this.vorname = vorname;
 		this.nachname = nachname;
-		this.adresse = adresse;
+		this.adresse = new SimpleStringProperty();
 		this.geburtstag = gebdat;
 		Zerstoerer z = new Zerstoerer();
 		Thread t = new Thread(z);
@@ -122,7 +119,7 @@ public class Kunde implements Comparable<Kunde>, Serializable{
 	 * @return
 	 */
 	public String getAdresse() {
-		return adresse;
+		return ;
 	}
 
 	/**
@@ -134,7 +131,7 @@ public class Kunde implements Comparable<Kunde>, Serializable{
 	public void setAdresse(String adresse) {
 		if(adresse == null)
 			throw new IllegalArgumentException("Adresse darf nicht null sein");
-		this.adresse = adresse;
+		this.adresseProperty().set(adresse);
 	}
 
 	/**
@@ -178,6 +175,19 @@ public class Kunde implements Comparable<Kunde>, Serializable{
 			throw new IllegalArgumentException("Vorname darf nicht null sein");
 		this.vorname = vorname;
 	}
+
+
+	//PROPERTIES START
+	public final String getImMinusProperty() {
+		return adresse.get();
+	}
+
+	public final ReadOnlyStringProperty adresseProperty(){
+		if(adresse == null)
+			adresse = new SimpleStringProperty("");
+		return adresse;
+	}
+	//PROPERTIES END
 
 	/**
 	 * Geburtstag des Kunden

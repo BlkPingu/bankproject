@@ -2,24 +2,23 @@ package verarbeitung;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import javafx.beans.property.*;
 
 public abstract class Konto implements Serializable{
 
-	boolean afterFirstCondiment = false;
-
 	private Waehrung w;
-
 	private Kunde inhaber;
-
 	private final long nummer;
-
-	protected double kontostand;
+	private ReadOnlyDoubleWrapper kontostand;
+	private BooleanProperty gesperrt;
+	private BooleanProperty imMinus = new SimpleBooleanProperty(false);
 
 	public ArrayList<Kontoaktion> kontoauszug = new ArrayList<>();
 
 	protected void setKontostand(double kontostand)
 	{
-		this.kontostand = kontostand;
+		this.kontostand.set(kontostand);
+		this.imMinus.set(this.kontostand.doubleValue() < 0);
 	}
 
 	protected void setWaehrung(Waehrung w)
@@ -32,16 +31,56 @@ public abstract class Konto implements Serializable{
 		return this.w;
 	}
 
-	private boolean gesperrt;
-
 	public Konto(Kunde inhaber, long kontonummer) {
 		if(inhaber == null)
 			throw new IllegalArgumentException("Inhaber darf nicht null sein!");
 		this.inhaber = inhaber;
 		this.nummer = kontonummer;
-		this.kontostand = 0;
-		this.gesperrt = false;
+		this.kontostand.setValue(0);
+		this.gesperrt.setValue(false);
 		this.w = Waehrung.EUR;
+	}
+
+	public void setImMinus(boolean imMinus) {
+		this.imMinus.setValue(imMinus);
+	}
+
+	public boolean isImMinus() {
+		return this.imMinus.getValue();
+	}
+
+	public void minusErmitteln(double kontostand){
+		if (kontostand < 0){
+			setImMinus(true);
+		}
+		else setImMinus(false);
+	}
+
+	public final boolean getImMinusProperty() {
+		return imMinus.get();
+	}
+
+	public BooleanProperty imMinusProperty(){
+		return this.imMinus;
+	}
+
+	public final boolean getgesperrt() {
+		return gesperrt.get();
+	}
+
+	public BooleanProperty gesperrtProperty(){
+		return this.gesperrt;
+	}
+
+
+	public final double getkontostandProperty() {
+		if (kontostand != null)
+			return kontostand.get();
+		return 0;
+	}
+
+	public final ReadOnlyDoubleProperty kontostandProperty(){
+		return this.kontostand.getReadOnlyProperty();
 	}
 
 	public final Kunde getInhaber() {
@@ -78,13 +117,14 @@ public abstract class Konto implements Serializable{
 
 	}
 	public final double getKontostand() {
-		return kontostand;
+		return this.kontostand.get();
 	}
 	public final long getKontonummer() {
 		return nummer;
 	}
 	public final boolean isGesperrt() {
-		return gesperrt;
+		return this.gesperrt.getValue();
+
 	}
 	public void einzahlen(double betrag, Waehrung w) {
 		if (betrag < 0) {
