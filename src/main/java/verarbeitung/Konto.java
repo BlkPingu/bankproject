@@ -1,176 +1,283 @@
 package verarbeitung;
-import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.ArrayList;
+
+import javafx.beans.InvalidationListener;
 import javafx.beans.property.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import sun.java2d.pipe.SpanShapeRenderer;
 
-public abstract class Konto implements Serializable{
+import java.util.Observable;
+import java.util.Observer;
 
-	private Waehrung w;
+/**
+ * stellt ein allgemeines Konto dar
+ */
+public abstract class Konto extends Observable
+{
+
+	/**
+	 * Fügt Observer hinzu
+	 */
+	public void ObserverHinzufügen(Observer observer){
+		this.addObserver(observer);
+	}
+
+	/** 
+	 * der Kontoinhaber
+	 */
 	private Kunde inhaber;
+
+	/**
+	 * die Kontonummer
+	 */
 	private final long nummer;
-	private ReadOnlyDoubleWrapper kontostand;
-	private BooleanProperty gesperrt;
-	private BooleanProperty imMinus = new SimpleBooleanProperty(false);
 
-	public ArrayList<Kontoaktion> kontoauszug = new ArrayList<>();
+	/**
+	 * W�hrung in der das Konto gef�hrt wird
+	 */
+	private Waehrung waehrung;
 
-	protected void setKontostand(double kontostand)
-	{
-		this.kontostand.set(kontostand);
-		this.imMinus.set(this.kontostand.doubleValue() < 0);
+	/**
+	 * der aktuelle Kontostand
+	 */
+	private SimpleDoubleProperty kontostandProperty = new SimpleDoubleProperty();
+
+	/**
+	 * ReadOnly Double Property der den Kontostand angibt
+	 */
+	public SimpleDoubleProperty getKontostandReadOnlyProperty(){
+		return this.kontostandProperty;
 	}
 
-	protected void setWaehrung(Waehrung w)
-	{
-		this.w = w;
+	/**
+	 * setzt den aktuellen Kontostand
+	 * @param kontostand neuer Kontostand
+	 */
+	protected void setKontostand(double kontostand) {
+		if(kontostand < 0){
+			isKontoImMinus.setValue(true);
+		}
+		else{
+			isKontoImMinus.setValue(false);
+		}
+
+		this.kontostandProperty.set(kontostand);
+		this.setChanged();
+		this.notifyObservers();
 	}
 
-	public final Waehrung getWaehrung()
-	{
-		return this.w;
-	}
+	/**
+	 * Wenn das Konto gesperrt ist (gesperrt = true), k�nnen keine Aktionen daran mehr vorgenommen werden,
+	 * die zum Schaden des Kontoinhabers w�ren (abheben, Inhaberwechsel)
+	 */
+	public BooleanProperty gesperrtProperty = new SimpleBooleanProperty();
 
+	/*
+	 * Zeigt an ob das Konto im Minus ist
+	 */
+	public SimpleBooleanProperty isKontoImMinus = new SimpleBooleanProperty();
+
+	/**
+	 * Setzt die beiden Eigenschaften kontoinhaber und kontonummer auf die angegebenen Werte,
+	 * der anf�ngliche Kontostand wird auf 0 gesetzt.
+	 *
+	 * @param inhaber Kunde
+	 * @param kontonummer long
+	 * @throws IllegalArgumentException wenn der Inhaber null
+	 */
 	public Konto(Kunde inhaber, long kontonummer) {
 		if(inhaber == null)
 			throw new IllegalArgumentException("Inhaber darf nicht null sein!");
 		this.inhaber = inhaber;
 		this.nummer = kontonummer;
-		this.kontostand.setValue(0);
-		this.gesperrt.setValue(false);
-		this.w = Waehrung.EUR;
+		this.setKontostand(0);
+		this.gesperrtProperty.setValue(false);
+		this.waehrung = Waehrung.EUR;
+	}
+	
+	/**
+	 * setzt alle Eigenschaften des Kontos auf Standardwerte
+	 */
+	public Konto() {
+		//hier ist kein weiterer Code erlaubt
+		this(Kunde.MUSTERMANN, 1234567);
 	}
 
-	public void setImMinus(boolean imMinus) {
-		this.imMinus.setValue(imMinus);
+	/**
+	 * wechselt die Konto W�hrung
+	 */
+	public void waehrungswechsel(Waehrung neu){
+		this.waehrung = neu;
+		this.setKontostand(neu.umrechnen(this.getKontostand()));
 	}
 
-	public boolean isImMinus() {
-		return this.imMinus.getValue();
+	/**
+	 * liefert die Konto Waehrung zur�ck
+	 * @return Waehrung
+	 */
+	public Waehrung getAktuelleWaehrung(){
+		return this.waehrung;
 	}
-
-	public void minusErmitteln(double kontostand){
-		if (kontostand < 0){
-			setImMinus(true);
-		}
-		else setImMinus(false);
-	}
-
-	public final boolean getImMinusProperty() {
-		return imMinus.get();
-	}
-
-	public BooleanProperty imMinusProperty(){
-		return this.imMinus;
-	}
-
-	public final boolean getgesperrt() {
-		return gesperrt.get();
-	}
-
-	public BooleanProperty gesperrtProperty(){
-		return this.gesperrt;
-	}
-
-
-	public final double getkontostandProperty() {
-		if (kontostand != null)
-			return kontostand.get();
-		return 0;
-	}
-
-	public final ReadOnlyDoubleProperty kontostandProperty(){
-		return this.kontostand.getReadOnlyProperty();
-	}
-
+	
+	
+	/**
+	 * liefert den Kontoinhaber zur�ck.
+	 * @return   Kunde
+	 */
 	public final Kunde getInhaber() {
 		return this.inhaber;
 	}
-
-	public String getKontoauszug() {
-		String k2 = null;
-		for (int i = 0; i < kontoauszug.size(); i++) {
-			String beschreibung = kontoauszug.get(i).getBeschreibung().toString();
-			double aktionBetrag = kontoauszug.get(i).getBetrag();
-			String betrag = Double.toString(aktionBetrag);
-			String datum = kontoauszug.get(i).getDatum().toString();
-
-			String k1 = betrag + " " + beschreibung + " " + datum;
-			k2 += k1 + System.lineSeparator();
-		}
-		return k2;
-	}
-	public void alleEintraegeLoeschen(LocalDate vor){
-		for (int i = 0; i < kontoauszug.size();i++){
-			LocalDate datum = kontoauszug.get(i).getDatum();
-			if (datum.isBefore(vor)) {
-				kontoauszug.remove(i);
-			}
-		}
-	}
+	
+	/**
+	 * setzt den Kontoinhaber
+	 * @param kinh   neuer Kontoinhaber
+	 * @throws GesperrtException wenn das Konto gesperrt ist
+	 * @throws IllegalArgumentException wenn kinh null ist
+	 */
 	public final void setInhaber(Kunde kinh) throws GesperrtException{
 		if (kinh == null)
 			throw new IllegalArgumentException("Der Inhaber darf nicht null sein!");
-		if(this.gesperrt)
-			throw new GesperrtException(this.nummer);
+		if(this.isGesperrt())
+			throw new GesperrtException(this.nummer);        
 		this.inhaber = kinh;
 
 	}
+	
+	/**
+	 * liefert den aktuellen Kontostand
+	 * @return   double
+	 */
 	public final double getKontostand() {
-		return this.kontostand.get();
+		return this.kontostandProperty.doubleValue();
 	}
+
+	/**
+	 * liefert die Kontonummer zur�ck
+	 * @return   long
+	 */
 	public final long getKontonummer() {
 		return nummer;
 	}
-	public final boolean isGesperrt() {
-		return this.gesperrt.getValue();
 
+	/**
+	 * liefert zur�ck, ob das Konto gesperrt ist oder nicht
+	 * @return
+	 */
+	public final boolean isGesperrt() {
+		return this.gesperrtProperty.getValue();
 	}
-	public void einzahlen(double betrag, Waehrung w) {
+	
+	/**
+	 * Erh�ht den Kontostand um den eingezahlten Betrag.
+	 *
+	 * @param betrag double
+	 * @throws IllegalArgumentException wenn der betrag negativ ist 
+	 */
+	public void einzahlen(double betrag) throws IllegalArgumentException {
 		if (betrag < 0) {
 			throw new IllegalArgumentException("Negativer Betrag");
 		}
 		setKontostand(getKontostand() + betrag);
-		Kontoaktion k = new Kontoaktion("Abgebung", betrag, LocalDate.now());
-		kontoauszug.add(k);
 	}
 
-	public Waehrung getAktuelleWaehrung()
-	{
-		return w;
+	/**
+	 *
+	 * @param betrag
+	 * @param w
+	 */
+	public void einzahlen(double betrag, Waehrung w){
+		einzahlen(w.umrechnen(betrag));
 	}
-
-	public void waehrungswechsel(Waehrung neu)
-	{
-		// selbstdokumentierender code ist was fuer anfaenger
-		this.setKontostand(this.getKontostand() * this.getWaehrung().umrechnen(neu.getValue()));
-		this.setWaehrung(neu);
-	}
-
-
-
+	
+	/**
+	 * Gibt eine Zeichenkettendarstellung der Kontodaten zur�ck.
+	 */
 	@Override
 	public String toString() {
 		String ausgabe;
 		ausgabe = "Kontonummer: " + this.getKontonummerFormatiert()
 				+ System.getProperty("line.separator");
 		ausgabe += "Inhaber: " + this.inhaber;
-		ausgabe += "Aktueller Kontostand: " + this.kontostand + " Euro ";
+		ausgabe += "Aktueller Kontostand: " + this.getKontostand() + " Euro ";
 		ausgabe += this.getGesperrtText() + System.getProperty("line.separator");
 		return ausgabe;
 	}
 
+	/**
+	 * Gibt true zurück wenn der Betrag vom Konto abgehoben werden kann
+	 * @param betrag
+	 * @return true, wenn Betrag abgehoben werden kann
+	 * 		   false, wenn Betrag nicht abgehoben werden kann
+	 */
+	protected abstract boolean canAbheben(double betrag);
+
+	/**
+	 * Wird aufgerufen **nachdem** eine erfolgreiche Abhebung stattgefunden hat
+	 * @param betrag
+	 */
+	protected abstract void successfulAbhebungHook(double betrag);
+
+	/**
+	 * Mit dieser Methode wird der geforderte Betrag vom Konto abgehoben, wenn es nicht gesperrt ist.
+	 *
+	 * @param betrag double
+	 * @throws GesperrtException wenn das Konto gesperrt ist
+	 * @throws IllegalArgumentException wenn der betrag negativ ist 
+	 * @return true, wenn die Abhebung geklappt hat, 
+	 * 		   false, wenn sie abgelehnt wurde
+	 */
+	public boolean abheben(double betrag) throws GesperrtException{
+		return this.abheben(betrag, Waehrung.EUR);
+	}
+
+	/**
+	 *
+	 * @param betrag
+	 * @param w
+	 * @return
+	 * @throws GesperrtException
+	 */
+	public boolean abheben(double betrag, Waehrung w) throws GesperrtException{
+		if (betrag < 0 ) {
+			throw new IllegalArgumentException();
+		}
+		if(this.isGesperrt())
+			throw new GesperrtException(this.getKontonummer());
+
+		betrag = w.umrechnen(betrag);
+
+		if(!this.canAbheben(betrag)){
+			return false;
+		}
+		else{
+			this.setKontostand(this.getKontostand() - betrag);
+			this.successfulAbhebungHook(betrag);
+			return true;
+		}
+	}
+	
+	/**
+	 * sperrt das Konto, Aktionen zum Schaden des Benutzers sind nicht mehr m�glich.
+	 */
 	public final void sperren() {
-		this.gesperrt = true;
+		this.gesperrtProperty.setValue(true);
 	}
 
+	/**
+	 * entsperrt das Konto, alle Kontoaktionen sind wieder m�glich.
+	 */
 	public final void entsperren() {
-		this.gesperrt = false;
+		this.gesperrtProperty.setValue(false);
 	}
-
+	
+	
+	/**
+	 * liefert eine String-Ausgabe, wenn das Konto gesperrt ist
+	 * @return "GESPERRT", wenn das Konto gesperrt ist, ansonsten ""
+	 */
 	public final String getGesperrtText()
 	{
-		if (this.gesperrt)
+		if (this.isGesperrt())
 		{
 			return "GESPERRT";
 		}
@@ -179,12 +286,31 @@ public abstract class Konto implements Serializable{
 			return "";
 		}
 	}
-
+	
+	/**
+	 * liefert die ordentlich formatierte Kontonummer
+	 * @return auf 10 Stellen formatierte Kontonummer
+	 */
 	public String getKontonummerFormatiert()
 	{
 		return String.format("%10d", this.nummer);
 	}
-
+	
+	/**
+	 * liefert den ordentlich formatierten Kontostand
+	 * @return formatierter Kontostand mit 2 Nachkommastellen und W�hrungssymbol �
+	 */
+	public String getKontostandFormatiert()
+	{
+		return String.format("%10.2f Euro" , this.getKontostand());
+	}
+	
+	/**
+	 * Vergleich von this mit other; Zwei Konten gelten als gleich,
+	 * wen sie die gleiche Kontonummer haben
+	 * @param other
+	 * @return true, wenn beide Konten die gleiche Nummer haben
+	 */
 	@Override
 	public boolean equals(Object other)
 	{
@@ -199,14 +325,23 @@ public abstract class Konto implements Serializable{
 		else
 			return false;
 	}
-
+	
 	@Override
 	public int hashCode()
 	{
 		return 31 + (int) (this.nummer ^ (this.nummer >>> 32));
 	}
+	
+	/**
+	 * schreibt this aUF DIE kONSOLE
+	 */
+	public void aufDieKonsoleSchreiben()
+	{
+		System.out.println(this.toString());
+	}
 
-	abstract boolean abheben(double betrag, Waehrung waehrung) throws GesperrtException;
 
-
+	public Waehrung getWaehrung() {
+		return waehrung;
+	}
 }

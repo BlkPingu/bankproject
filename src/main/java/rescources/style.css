@@ -1,0 +1,12 @@
+#main-grid{
+    -fx-font: "Roboto";
+    -fx-padding: 20 20 20 20;
+}
+.headline{
+    -fx-font: 15pt "Roboto";
+}
+
+.welcome-msg{
+    -fx-fill: red;
+    -fx-alignment: center;
+}

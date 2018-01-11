@@ -1,44 +1,22 @@
 package main;
+import verarbeitung.*;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import verarbeitung.GesperrtException;
-import verarbeitung.Girokonto;
-import verarbeitung.KontoOberflaeche;
-import verarbeitung.Kunde;
 
-import java.time.LocalDate;
+public class Main extends Application {
 
-public class Main extends Application{
     @Override
-    public void start(Stage primaryStage){
-        Parent root = new KontoOberflaeche();
-        Scene scene = new Scene(root,300,275);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Bankprogramm");
+    public void start(Stage primaryStage) throws Exception{
+        Parent kontoOberflaeche = FXMLLoader.load(getClass().getResource("/KontoOberflaeche.fxml"));
+
+        //Parent kontoOberflaeche = kontoController.getKontoOberflaeche();
+        primaryStage.setTitle("Uebung13");
+        primaryStage.setScene(new Scene(kontoOberflaeche, 400, 300));
         primaryStage.show();
-
-
-        private Kunde kunde = new Kunde("hans", "franz" , "Landweg 1", LocalDate.now());
-        private Girokonto konto = new Girokonto(kunde,000001111,500);
-
-
-        protected void einzahlen(double betrag){
-            this.konto.einzahlen(betrag);
-    }
-
-    protected void auszahlen(double betrag){
-            boolean geklappt = false;
-            try {
-                geklappt = this.konto.abheben(betrag);
-            }(catch GesperrtException e) {geklappt = false;}
-
-    }
-
-
-
 
     }
 

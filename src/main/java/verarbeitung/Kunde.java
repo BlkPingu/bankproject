@@ -1,32 +1,27 @@
 package verarbeitung;
 
-import javafx.beans.property.*;
-import javafx.beans.property.ReadOnlyStringProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
-
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.Locale;
 
-
 /**
  * <p>
- * verarbeitung.Kunde einer Bank
+ * Kunde einer Bank
  * </p>
  * 
  * @author Dorothea Hubrich
  * @version 1.0
  */
-public class Kunde implements Comparable<Kunde>, Serializable{
+public class Kunde implements Comparable<Kunde>{
 	/**
-	 * Ein Musterkundengruppe
+	 * Ein Musterkunde
 	 */
-
-
 	public static final Kunde MUSTERMANN = new Kunde("Max", "Mustermann", "zuhause", LocalDate.now());
-
+	
 	/**
 	 * englische oder deutsche Anrede, je nach den Systemeinstellungen
 	 */
@@ -48,18 +43,33 @@ public class Kunde implements Comparable<Kunde>, Serializable{
 	 * Der Nachname
 	 */
 	private String nachname;
+
 	/**
 	 * Die Adresse
 	 */
-	private ReadOnlyStringProperty adresse;
+	private StringProperty addressStringProperty = new SimpleStringProperty();
+
+	/*
+	 * öffentliches Adresss Property
+	 */
+	public StringProperty getAdressStringProperty(){
+		return this.addressStringProperty;
+	}
+
 	/**
 	 * Geburtstag
 	 */
 	private LocalDate geburtstag;
 
+	/**
+	 * erzeugt einen Standardkunden
+	 */
+	public Kunde() {
+		this("Max", "Mustermann", "Adresse", LocalDate.now());
+	}
 
 	/**
-	 * Erzeugt einen Kunden mit den uebergebenen Werten
+	 * Erzeugt einen Kunden mit den �bergebenen Werten
 	 * 
 	 * @param vorname
 	 * @param nachname
@@ -72,40 +82,36 @@ public class Kunde implements Comparable<Kunde>, Serializable{
 			throw new IllegalArgumentException("null als Parameter nich erlaubt");
 		this.vorname = vorname;
 		this.nachname = nachname;
-		this.adresse = new SimpleStringProperty();
+		this.setAdresse(adresse);
 		this.geburtstag = gebdat;
-		Zerstoerer z = new Zerstoerer();
-		Thread t = new Thread(z);
-		Runtime.getRuntime().addShutdownHook(t);
 	}
 
-
 	/**
-	 * Klasse fuer Aufrumarbeiten
-	 * @author Doro
 	 *
+	 * @param vorname
+	 * @param nachname
+	 * @param adresse
+	 * @param gebdat
 	 */
-	private class Zerstoerer implements Runnable
-	{
-		@Override
-		public void run(){}
+	public Kunde(String vorname, String nachname, String adresse, String gebdat)  {
+		this(vorname, nachname, adresse, LocalDate.parse(gebdat,DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)));
 	}
 
 	/**
-	 * gibt alle main.Daten des Kunden aus
+	 * gibt alle Daten des Kunden aus
 	 */
 	@Override
 	public String toString() {
 		String ausgabe;
 		DateTimeFormatter df = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
 		ausgabe = this.vorname + " " + this.nachname + System.getProperty("line.separator");
-		ausgabe += this.adresse + System.getProperty("line.separator");
+		ausgabe += this.getAdressStringProperty().getValue() + System.getProperty("line.separator");
 		ausgabe += df.format(this.geburtstag) + System.getProperty("line.separator");
 		return ausgabe;
 	}
 
 	/**
-	 * vollstaendiger Name des Kunden in der Form "Nachname, Vorname"
+	 * vollst�ndiger Name des Kunden in der Form "Nachname, Vorname"
 	 * 
 	 * @return
 	 */
@@ -113,14 +119,9 @@ public class Kunde implements Comparable<Kunde>, Serializable{
 		return this.nachname + ", " + this.vorname;
 	}
 
-	/**
-	 * Adresse des Kunden
-	 * 
-	 * @return
-	 */
-	public String getAdresse() {
-		return ;
-	}
+
+
+
 
 	/**
 	 * setzt die Adresse auf den angegebenen Wert
@@ -131,7 +132,7 @@ public class Kunde implements Comparable<Kunde>, Serializable{
 	public void setAdresse(String adresse) {
 		if(adresse == null)
 			throw new IllegalArgumentException("Adresse darf nicht null sein");
-		this.adresseProperty().set(adresse);
+		this.addressStringProperty.set(adresse);
 	}
 
 	/**
@@ -176,19 +177,6 @@ public class Kunde implements Comparable<Kunde>, Serializable{
 		this.vorname = vorname;
 	}
 
-
-	//PROPERTIES START
-	public final String getImMinusProperty() {
-		return adresse.get();
-	}
-
-	public final ReadOnlyStringProperty adresseProperty(){
-		if(adresse == null)
-			adresse = new SimpleStringProperty("");
-		return adresse;
-	}
-	//PROPERTIES END
-
 	/**
 	 * Geburtstag des Kunden
 	 * 
@@ -203,19 +191,24 @@ public class Kunde implements Comparable<Kunde>, Serializable{
 		return this.getName().compareTo(arg0.getName());
 	}
 	
-	/**
-	 * Destruktor
-	 */
-	protected void finalize()
-	{
-		System.out.println("verarbeitung.Kunde weg");
-	}
-	
 	static
 	{
 		if(Locale.getDefault().getCountry().equals("DE"))
-			ANREDE = "Hallo Benutzer!";
+			ANREDE = "Hallo, lieber Kunde...";
 		else
-			ANREDE = "Dear Customer!";
+			ANREDE = "Dear customer...";
+		//System.out.println(this);
+	}
+	
+	@Override
+	protected void finalize()
+	{
+		try {
+		//Aufraeumarbeiten
+		System.out.println("Und Tschuess");
+		} catch (Throwable e) {}
+		try {
+			super.finalize();
+		} catch (Throwable e) {	}
 	}
 }

@@ -45,6 +45,16 @@ public class Sparbuch extends Konto implements Serializable{
 	}
 
 	@Override
+	protected boolean canAbheben(double betrag) {
+		return false;
+	}
+
+	@Override
+	protected void successfulAbhebungHook(double betrag) {
+
+	}
+
+	@Override
 	public boolean abheben (double betrag, Waehrung waehrung) throws GesperrtException{
 		if (betrag < 0 ) {
 			throw new IllegalArgumentException();

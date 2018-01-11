@@ -1,41 +1,27 @@
 package verarbeitung;
 
-import java.io.Serializable;
-import java.time.LocalDate;
-
 /**
- * Ein verarbeitung.Girokonto
+ * Ein Girokonto
  * @author Doro
  *
  */
-public class Girokonto extends Konto implements Serializable {
+public class Girokonto extends Konto {
 	/**
-	 * Wert, bis zu dem das verarbeitung.Konto ueberzogen werden darf
+	 * Wert, bis zu dem das Konto �berzogen werden darf
 	 */
 	private double dispo;
 
 	/**
-	 * erzeugt ein Standard-verarbeitung.Girokonto
+	 * erzeugt ein Standard-Girokonto
 	 */
 	public Girokonto()
 	{
 		super(Kunde.MUSTERMANN, 99887766);
 		this.dispo = 500;
 	}
-
-	public boolean abheben(double betrag, Waehrung w) throws GesperrtException
-	{
-		double betragInWaehrung = w.umrechnen(betrag);
-		if (betragInWaehrung < w.umrechnen(kontostand))
-			return false;
-		else setKontostand(getKontostand() - betragInWaehrung);
-		Kontoaktion k = new Kontoaktion("Abgebung", betrag, LocalDate.now());
-		kontoauszug.add(k);
-		return true;
-	}
 	
 	/**
-	 * erzeugt ein verarbeitung.Girokonto mit den angegebenen Werten
+	 * erzeugt ein Girokonto mit den angegebenen Werten
 	 * @param inhaber Kontoinhaber
 	 * @param nummer Kontonummer
 	 * @param dispo Dispo
@@ -60,7 +46,7 @@ public class Girokonto extends Konto implements Serializable {
 
 	/**
 	 * setzt den Dispo neu
-	 * @param dispo muss groesser sein als 0
+	 * @param dispo muss gr��er sein als 0
 	 * @throw IllegalArgumentException wenn dispo negativ ist
 	 */
 	public void setDispo(double dispo) {
@@ -69,9 +55,18 @@ public class Girokonto extends Konto implements Serializable {
 		this.dispo = dispo;
 	}
 	
+	/**
+	 * wechselt die Konto W�hrung und passt f�r Girokonten speziell den Dispo an
+	 */
+	@Override
+	public void waehrungswechsel(Waehrung neu){
+		super.waehrungswechsel(neu);
+		this.setDispo(neu.umrechnen(this.getDispo()));
+	}
+	
     /**
-     * vermindert den Kontostand um den angegebenen Betrag, falls das verarbeitung.Konto nicht gesperrt ist.
-     * Am Empfaengerkonto wird keine Aenderung vorgenommen, da davon ausgegangen wird, dass dieses sich
+     * vermindert den Kontostand um den angegebenen Betrag, falls das Konto nicht gesperrt ist.
+     * Am Empf�ngerkonto wird keine �nderung vorgenommen, da davon ausgegangen wird, dass dieses sich
      * bei einer anderen Bank befindet.
      * @param betrag double
      * @param empfaenger String
@@ -79,14 +74,14 @@ public class Girokonto extends Konto implements Serializable {
      * @param nachBlz int
      * @param verwendungszweck String
      * @return boolean
-     * @throws GesperrtException wenn das verarbeitung.Konto gesperrt ist
+     * @throws GesperrtException wenn das Konto gesperrt ist
      * @throws IllegalArgumentException wenn der Betrag negativ ist oder
      * 									empfaenger oder verwendungszweck null ist
      */
-    public boolean ueberweisungAbsenden(double betrag,
-    		String empfaenger, long nachKontonr,
-    		long nachBlz, String verwendungszweck)
-    				throws GesperrtException
+    public boolean ueberweisungAbsenden(double betrag, 
+    		String empfaenger, long nachKontonr, 
+    		long nachBlz, String verwendungszweck) 
+    				throws GesperrtException 
     {
       if (this.isGesperrt())
             throw new GesperrtException(this.getKontonummer());
@@ -102,7 +97,7 @@ public class Girokonto extends Konto implements Serializable {
     }
 
     /**
-     * erhoeht den Kontostand um den angegebenen Betrag
+     * erh�ht den Kontostand um den angegebenen Betrag
      * @param betrag double
      * @param vonName String
      * @param vonKontonr int
@@ -127,4 +122,30 @@ public class Girokonto extends Konto implements Serializable {
     	return ausgabe;
     }
 
+    /*
+	@Override
+	public boolean abheben(double betrag) throws GesperrtException{
+		if (betrag < 0 ) {
+			throw new IllegalArgumentException();
+		}
+		if(this.isGesperrt())
+			throw new GesperrtException(this.getKontonummer());
+		if (getKontostand() - betrag >= - dispo)
+		{
+			setKontostand(getKontostand() - betrag);
+			return true;
+		}
+		else
+			return false;
+	}
+	*/
+
+    @Override
+	protected void successfulAbhebungHook(double betrag){
+
+	}
+	@Override
+	protected boolean canAbheben(double betrag){
+    	return getKontostand() - betrag >= - dispo;
+	}
 }
