@@ -21,6 +21,9 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        launch(args);
+
+        Logger.getLogger().fileName = "allesMitschreiben.log";
+        Logger.getLogger().log("Protokoll");
+        //launch(args);
     }
 }
