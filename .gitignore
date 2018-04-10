@@ -3,6 +3,11 @@
 #.idea
 .idea/workspace.xml
 .idea/tasks.xml
+*.iws
+
+workspace.xml
+tasks.xml
+
 # Compiled class file
 *.class
 
